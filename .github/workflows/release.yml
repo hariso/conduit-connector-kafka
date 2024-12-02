@@ -18,6 +18,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check Version Consistency
+        run: |
+          # Extract tag and remove 'v' prefix if exists
+          TAG=${GITHUB_REF#refs/tags/}
+          TAG_CLEAN=$(echo $TAG | sed 's/^v//')
+          
+          # Read version from connector.yaml
+          YAML_VERSION=$(yq e '.specification.version' connector.yaml)
+          YAML_VERSION_CLEAN=$(echo $YAML_VERSION | sed 's/^v//')
+          
+          # Compare versions
+          if [[ "$TAG_CLEAN" != "$YAML_VERSION_CLEAN" ]]; then
+            echo "Version mismatch detected:"
+            echo "Git Tag: $TAG"
+            echo "connector.yaml Version: $YAML_VERSION"
+            exit 1
+          fi
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
