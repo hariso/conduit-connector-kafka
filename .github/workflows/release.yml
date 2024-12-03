@@ -22,10 +22,10 @@ jobs:
         run: |
           TAG=${GITHUB_REF#refs/tags/}
           
-          SV_REGEX="^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\+([0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*))?$"
+          SV_REGEX="^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\+([0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*))?$"
 
           if ! [[ $TAG =~ $SV_REGEX ]]; then
-            echo "$TAG is NOT a valid semver string"
+            echo "$TAG is NOT a valid tag (expected format: v<semver>)"
             exit 1
           fi
 
@@ -33,14 +33,12 @@ jobs:
         run: |
           # Extract tag and remove 'v' prefix if exists
           TAG=${GITHUB_REF#refs/tags/}
-          TAG_CLEAN=$(echo $TAG | sed 's/^v//')
           
           # Read version from connector.yaml
           YAML_VERSION=$(yq e '.specification.version' connector.yaml)
-          YAML_VERSION_CLEAN=$(echo $YAML_VERSION | sed 's/^v//')
           
           # Compare versions
-          if [[ "$TAG_CLEAN" != "$YAML_VERSION_CLEAN" ]]; then
+          if [[ "$TAG" != "$YAML_VERSION" ]]; then
             echo "Version mismatch detected:"
             echo "Git Tag: $TAG"
             echo "connector.yaml Version: $YAML_VERSION"
