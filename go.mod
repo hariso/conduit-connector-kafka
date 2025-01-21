@@ -12,7 +12,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/matryer/is v1.4.1
 	github.com/rs/zerolog v1.33.0
-	github.com/twmb/franz-go v1.18.0
+	github.com/twmb/franz-go v1.18.1
 	github.com/twmb/franz-go/pkg/kadm v1.14.0
 	go.uber.org/mock v0.5.0
 )
@@ -149,7 +149,7 @@ require (
 	github.com/oklog/run v1.1.0 // indirect
 	github.com/olekukonko/tablewriter v0.0.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
-	github.com/pierrec/lz4/v4 v4.1.21 // indirect
+	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/polyfloyd/go-errorlint v1.7.0 // indirect
 	github.com/prometheus/client_golang v1.20.2 // indirect
